@@ -1,3 +1,4 @@
+import { Player } from './player/entities/player.entity';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,9 +9,19 @@ import { MatchModule } from './match/match.module';
 import { TableModule } from './table/table.module';
 import { ChampionshipModule } from './championship/championship.module';
 import { PlayerModule } from './player/player.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [PlayerModule, TeamModule, StadiumModule, AdressModule, MatchModule, TableModule, ChampionshipModule],
+  imports: [TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: 'root',
+    database: 'nestjs',
+    entities: [Player],
+    synchronize: true,
+  }), PlayerModule, TeamModule, StadiumModule, AdressModule, MatchModule, TableModule, ChampionshipModule],
   controllers: [AppController],
   providers: [AppService],
 })
