@@ -3,15 +3,16 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 @Entity()
 export class Player {
 
-    @PrimaryGeneratedColumn('uuid')
-    idPlayer: number;
+    @PrimaryGeneratedColumn()
+    idPlayer: string;
 
     @Column()
-    name: string;
+    namePlayer: string;
 
     @Column()
-    gender: string;
+    genderPlayer: string;
 
     @Column()
-    isActive: boolean;
+    isActivePlayer: boolean;
+
 }
