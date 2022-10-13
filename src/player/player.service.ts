@@ -1,7 +1,5 @@
-import { UpdateAdressDto } from './../adress/dto/update-adress.dto';
 import { ClassSerializerInterceptor, Get, Injectable, NotFoundException, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, SelectQueryBuilder } from 'typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
@@ -22,39 +20,34 @@ export class PlayerService {
     return this.pr.find();
   }
 
-  findOne(id: string) {
-    const player = this.pr.findOneBy({idPlayer: id});
-    if (!player) {
-      return new NotFoundException(`Player ${id} not found`);
+  async findOne(id: string) {
+    const player = await this.pr.findOneBy({idPlayer: id});
+    if (player) {
+        return player;
     } else {
-      return player;
+        return new NotFoundException(`Player ${id} not found`);
     }
   }
 
   async update(id: string, updatePlayerDto: UpdatePlayerDto) {
-    //const player = await this.pr.preload({
-    //  idPlayer: id,
-    //  ...updatePlayerDto,
-    //});
-    const player = await this.pr.findOneBy({idPlayer: id});
-    player.namePlayer = updatePlayerDto.namePlayer;
-    player.genderPlayer = updatePlayerDto.genderPlayer;
-    player.isActivePlayer = updatePlayerDto.isActivePlayer;
-    //console.log(player);
-    if (!player) {
-      throw new NotFoundException(`Player ${id} not found`);
+    const player = await this.pr.preload({
+      idPlayer: id,
+      ...updatePlayerDto,
+    });
+    if (player) {
+        this.pr.save(player);
+        return updatePlayerDto;
+    } else {
+        throw new NotFoundException(`Player ${id} not found`);
     }
-    this.pr.save(player);
-    return updatePlayerDto;
   }
 
-  remove(id: string) {
-    const player = this.findOne(id);
-    if(!player){
-      throw new NotFoundException(`Player ${id} not found`);
+  async remove(id: string) {
+    const player = await this.pr.findOneBy({idPlayer: id});
+    if (player) {
+        return this.pr.delete(player.idPlayer);
     } else {
-        this.pr.delete(id);
-        return `Player ${id} deleted`;
+        return new NotFoundException(`Player ${id} not found`);
     }
   }
 }
