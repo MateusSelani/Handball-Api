@@ -19,16 +19,16 @@ export class StadiumController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.stadiumService.findOne(+id);
+    return this.stadiumService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStadiumDto: UpdateStadiumDto) {
-    return this.stadiumService.update(+id, updateStadiumDto);
+    return this.stadiumService.update(id, updateStadiumDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.stadiumService.remove(+id);
+    return this.stadiumService.remove(id);
   }
 }

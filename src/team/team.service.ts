@@ -25,7 +25,7 @@ export class TeamService {
     if (team) {
         return team;
     } else {
-        throw new NotFoundException(`Team ${team.nameTeam} not found`)
+        throw new NotFoundException(`Team ${id} not found`)
     }
   }
 
@@ -38,7 +38,7 @@ export class TeamService {
         this.tr.save(team);
         return updateTeamDto;
     } else {
-        throw new NotFoundException(`Team ${team.nameTeam} not found`);
+        throw new NotFoundException(`Team ${id} not found`);
     }
   }
 
