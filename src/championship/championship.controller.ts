@@ -19,16 +19,16 @@ export class ChampionshipController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.championshipService.findOne(+id);
+    return this.championshipService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateChampionshipDto: UpdateChampionshipDto) {
-    return this.championshipService.update(+id, updateChampionshipDto);
+    return this.championshipService.update(id, updateChampionshipDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.championshipService.remove(+id);
+    return this.championshipService.remove(id);
   }
 }

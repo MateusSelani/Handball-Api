@@ -1,3 +1,4 @@
+import { Championship } from './championship/entities/championship.entity';
 import { Stadium } from './stadium/entities/stadium.entity';
 import { Team } from './team/entities/team.entity';
 import { Player } from './player/entities/player.entity';
@@ -21,7 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     username: 'postgres',
     password: 'root',
     database: 'nestjs',
-    entities: [Player, Team, Stadium],
+    entities: [Player, Team, Stadium, Championship],
     synchronize: true,
   }), PlayerModule, TeamModule, StadiumModule, AdressModule, MatchModule, TableModule, ChampionshipModule],
   controllers: [AppController],
