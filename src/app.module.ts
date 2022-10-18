@@ -11,10 +11,10 @@ import { TeamModule } from './team/team.module';
 import { StadiumModule } from './stadium/stadium.module';
 import { AdressModule } from './adress/adress.module';
 import { MatchModule } from './match/match.module';
-import { TableModule } from './table/table.module';
 import { ChampionshipModule } from './championship/championship.module';
 import { PlayerModule } from './player/player.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClassificationModule } from './classification/classification.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -26,7 +26,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     database: 'nestjs',
     entities: [Player, Team, Stadium, Championship, Adress, Match],
     synchronize: true,
-  }), PlayerModule, TeamModule, StadiumModule, AdressModule, MatchModule, TableModule, ChampionshipModule],
+  }), PlayerModule, TeamModule, StadiumModule, AdressModule, MatchModule, ChampionshipModule, ClassificationModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -7,7 +7,6 @@ import { UpdateMatchDto } from './dto/update-match.dto';
 
 @Injectable()
 export class MatchService {
-
   constructor(@InjectRepository(Match)
     private readonly mr: Repository<Match>) {}
 
