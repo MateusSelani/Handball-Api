@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Team } from './../../team/entities/team.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
 export class Player {
@@ -14,5 +15,11 @@ export class Player {
 
     @Column()
     isActivePlayer: boolean;
+
+    @ManyToOne(() => Team, (team) => team.players, {
+        cascade: true,
+    })
+    @JoinColumn()
+    team: Team;
 
 }

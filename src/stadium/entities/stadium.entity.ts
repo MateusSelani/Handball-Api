@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Adress } from "src/adress/entities/adress.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Stadium {
@@ -9,4 +10,9 @@ export class Stadium {
     @Column()
     nameStadium: string;
 
+    @OneToOne(() => Adress,{
+        cascade: true
+    })
+    @JoinColumn()
+    adress: Adress;
 }

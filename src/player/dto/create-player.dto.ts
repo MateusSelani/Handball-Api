@@ -1,3 +1,4 @@
+import { Team } from './../../team/entities/team.entity';
 import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 
 export class CreatePlayerDto {
@@ -13,4 +14,7 @@ export class CreatePlayerDto {
     @IsBoolean()
     @IsNotEmpty()
     isActivePlayer: boolean;
+
+    @IsNotEmpty()
+    team: Team;
 }
