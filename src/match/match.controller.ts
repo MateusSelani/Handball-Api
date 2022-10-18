@@ -12,6 +12,11 @@ export class MatchController {
     return this.matchService.create(createMatchDto);
   }
 
+  @Post('create-matches')
+  createMatches() {
+    return this.matchService.createMatches();
+  }
+
   @Get()
   findAll() {
     return this.matchService.findAll();
@@ -19,7 +24,7 @@ export class MatchController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.matchService.findOne(+id);
+    return this.matchService.findOne(id);
   }
 
   @Patch(':id')
