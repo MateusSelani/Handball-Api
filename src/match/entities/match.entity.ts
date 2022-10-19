@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Championship } from './../../championship/entities/championship.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Match {
@@ -17,4 +18,7 @@ export class Match {
 
     @Column()
     occurredMatch: boolean;
+
+    @ManyToOne(() => Championship, (championship) => championship.match)
+    championship: Championship;
 }

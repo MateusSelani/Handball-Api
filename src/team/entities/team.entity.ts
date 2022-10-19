@@ -1,5 +1,7 @@
+import { Championship } from './../../championship/entities/championship.entity';
+import { Stadium } from './../../stadium/entities/stadium.entity';
 import { Player } from "src/player/entities/player.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Table } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Table } from "typeorm";
 
 @Entity()
 export class Team {
@@ -16,4 +18,11 @@ export class Team {
     @OneToOne(() => Player)
     @JoinColumn()
     captain: Player;
+
+    @OneToOne(() => Stadium)
+    home: Stadium;
+
+    @ManyToOne(() => Championship, (championship) => championship.teams)
+    @JoinColumn()
+    championship: Championship;
 }
