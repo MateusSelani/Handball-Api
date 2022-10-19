@@ -1,6 +1,7 @@
+import { Classification } from './../../classification/entities/classification.entity';
 import { Match } from './../../match/entities/match.entity';
 import { Team } from './../../team/entities/team.entity';
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Championship {
@@ -19,4 +20,7 @@ export class Championship {
 
     @OneToMany(() => Match, (match) => match.championship)
     match: Match;
+
+    @OneToOne(() => Classification)
+    classification: Classification;
 }

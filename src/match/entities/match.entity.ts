@@ -1,3 +1,4 @@
+import { Team } from './../../team/entities/team.entity';
 import { Championship } from './../../championship/entities/championship.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -21,4 +22,10 @@ export class Match {
 
     @ManyToOne(() => Championship, (championship) => championship.match)
     championship: Championship;
+
+    @ManyToOne(() => Team, (team) => team.matchAsHomeTeam)
+    homeTeam: Team;
+
+    @ManyToOne(() => Team, (team) => team.matchAsVisitingTeam)
+    visitingTeam: Team;
 }
