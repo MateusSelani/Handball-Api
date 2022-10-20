@@ -1,3 +1,4 @@
+import { Classification } from './../classification/entities/classification.entity';
 import { Championship } from './entities/championship.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';

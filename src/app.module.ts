@@ -1,3 +1,4 @@
+import { Classification } from './classification/entities/classification.entity';
 import { Match } from './match/entities/match.entity';
 import { Adress } from './adress/entities/adress.entity';
 import { Championship } from './championship/entities/championship.entity';
@@ -24,7 +25,7 @@ import { ClassificationModule } from './classification/classification.module';
     username: 'postgres',
     password: 'root',
     database: 'nestjs',
-    entities: [Player, Team, Stadium, Championship, Adress, Match],
+    entities: [Player, Team, Stadium, Championship, Adress, Match, Classification],
     synchronize: true,
   }), PlayerModule, TeamModule, StadiumModule, AdressModule, MatchModule, ChampionshipModule, ClassificationModule],
   controllers: [AppController],

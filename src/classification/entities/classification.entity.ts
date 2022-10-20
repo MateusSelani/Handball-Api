@@ -1,4 +1,3 @@
-import { Championship } from './../../championship/entities/championship.entity';
 import { Team } from './../../team/entities/team.entity';
 import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
