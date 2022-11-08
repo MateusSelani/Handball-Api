@@ -1,11 +1,6 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Adress } from '@prisma/client';
 
-@Entity()
-export class Adress {
-
-    @PrimaryGeneratedColumn("uuid")
+export class AdressEntity implements Adress {
     idAdress: string;
-
-    @Column()
     rua: string;
 }

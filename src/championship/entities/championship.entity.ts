@@ -1,27 +1,7 @@
-import { Classification } from './../../classification/entities/classification.entity';
-import { Match } from './../../match/entities/match.entity';
-import { Team } from './../../team/entities/team.entity';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Championship } from "@prisma/client";
 
-@Entity()
-export class Championship {
-
-    @PrimaryGeneratedColumn("uuid")
+export class ChampionshipEntity implements Championship{
     idChampionship: string;
-
-    @Column()
     nameChampionship: string;
-
-    @Column()
     yearChampionship: number;
-
-    @OneToMany(() => Team, (team) => team.championship)
-    teams: Team;
-
-    @OneToMany(() => Match, (match) => match.championship)
-    match: Match;
-
-    @OneToOne(() => Classification)
-    @JoinColumn()
-    classification: Classification;
 }

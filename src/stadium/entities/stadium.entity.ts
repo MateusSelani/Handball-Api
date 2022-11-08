@@ -1,18 +1,6 @@
-import { Adress } from "src/adress/entities/adress.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Stadium } from "@prisma/client";
 
-@Entity()
-export class Stadium {
-
-    @PrimaryGeneratedColumn("uuid")
+export class StadiumEntity implements Stadium {
     idStadium: string;
-
-    @Column()
     nameStadium: string;
-
-    @OneToOne(() => Adress,{
-        cascade: true
-    })
-    @JoinColumn()
-    adress: Adress;
 }

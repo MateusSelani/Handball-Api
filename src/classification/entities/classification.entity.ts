@@ -1,18 +1,7 @@
-import { Team } from './../../team/entities/team.entity';
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Classification } from "@prisma/client";
 
-@Entity()
-export class Classification {
-
-    @PrimaryGeneratedColumn("uuid")
+export class ClassificationEntity implements Classification {
     idClassification: string;
-
-    @Column()
     pointsTeam: number;
-
-    @Column()
-    goalDifference: number;
-
-    @OneToMany(() => Team, (team) => team.classification)
-    teams: Team;
+    goalDifference: number;    
 }
