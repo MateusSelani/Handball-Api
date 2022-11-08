@@ -1,12 +1,13 @@
-import { Stadium } from './entities/stadium.entity';
 import { Module } from '@nestjs/common';
-import { StadiumService } from './stadium.service';
-import { StadiumController } from './stadium.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PrismaService } from './../prisma/prisma.service';
+import { Stadium } from './entities/stadium.entity';
+import { StadiumController } from './stadium.controller';
+import { StadiumService } from './stadium.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Stadium])],
   controllers: [StadiumController],
-  providers: [StadiumService]
+  providers: [StadiumService, PrismaService]
 })
 export class StadiumModule {}

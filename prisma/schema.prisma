@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Adress {
+  idAdress String @id @default(uuid())
+  rua      String
+
+  @@map("adress")
+}
+
+model Championship {
+  idChampionship   String @id @default(uuid())
+  nameChampionship String
+  yearChampionship Int
+  // @OneToMany(() => Team, (team) => team.championship)
+  // teams: Team;
+
+  // @OneToMany(() => Match, (match) => match.championship)
+  // match: Match;
+
+  // @OneToOne(() => Classification)
+  // @JoinColumn()
+  // classification: Classification;
+
+  @@map("championship")
+}
+
+model Classification {
+  idClassification String @id @default(uuid())
+  pointsTeam       Int
+  goalDifference   Int
+  // @OneToMany(() => Team, (team) => team.classification)
+  // teams: Team;
+
+  @@map("classification")
+}
+
+model Match {
+  idMatch          String   @id @default(uuid())
+  goalHomeTeam     Int
+  goalVisitingTeam Int
+  dateMatch        DateTime
+  occurredMatch    Boolean  @default(false)
+  // @ManyToOne(() => Championship, (championship) => championship.match)
+  // championship: Championship;
+
+  // @ManyToOne(() => Team, (team) => team.matchAsHomeTeam)
+  // homeTeam: Team;
+
+  // @ManyToOne(() => Team, (team) => team.matchAsVisitingTeam)
+  // visitingTeam: Team;
+
+  @@map("match")
+}
+
+model Player {
+  idPlayer       String  @id @default(uuid())
+  namePlayer     String
+  genderPlayer   String
+  isActivePlayer Boolean @default(true)
+  // @ManyToOne(() => Team, (team) => team.players, {
+  //     cascade: true,
+  // })
+  // @JoinColumn()
+  // team: Team;
+
+  @@map("player")
+}
+
+model Stadium {
+  idStadium   String @id @default(uuid())
+  nameStadium String
+  // @OneToOne(() => Adress,{
+  //     cascade: true
+  // })
+  // @JoinColumn()
+  // adress: Adress;
+
+  @@map("stadium")
+}
+
+model Team {
+  idTeam   String @id @default(uuid())
+  nameTeam String
+  // @OneToMany(() => Player, (player) => player.team)
+  // players: Player[];
+
+  // @OneToOne(() => Player)
+  // @JoinColumn()
+  // captain: Player;
+
+  // @OneToOne(() => Stadium)
+  // home: Stadium;
+
+  // @ManyToOne(() => Championship, (championship) => championship.teams)
+  // @JoinColumn()
+  // championship: Championship;
+
+  // @ManyToOne(() => Classification, (classification) => classification.teams)
+  // classification: Classification;
+
+  // @OneToMany(() => Match, (match) => match.homeTeam)
+  // matchAsHomeTeam: Match;
+
+  // @OneToMany(() => Match, (match) => match.visitingTeam)
+  // matchAsVisitingTeam: Match;
+
+  @@map("team")
+}
