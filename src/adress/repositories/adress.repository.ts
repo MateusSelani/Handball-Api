@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AdressRepository } from './repositories/adress.repository';
+import { PrismaService } from './../../prisma/prisma.service';
 
 @Injectable()
-export class AdressService {
-  constructor(private readonly pr: AdressRepository) {}
+export class AdressRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  // methods prisma crud or cli
 
   // create(createAdressDto: CreateAdressDto) {
   //   this.ar.save(createAdressDto);

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { MatchRepository } from './repositories/match.repository';
+import { PrismaService } from './../../prisma/prisma.service';
 
 @Injectable()
-export class MatchService {
-  constructor(private readonly mr: MatchRepository) {}
+export class MatchRepository {
+  constructor(private readonly prisma: PrismaService) {}
 
   // create(createMatchDto: CreateMatchDto) {
   //   return 'ok';

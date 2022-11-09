@@ -1,4 +1,3 @@
-import { Match } from './../entities/match.entity';
 import { IsNotEmpty, IsNumber } from "class-validator";
 
 export class CreateMatchDto {

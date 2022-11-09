@@ -1,26 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { CreateClassificationDto } from './dto/create-classification.dto';
-import { UpdateClassificationDto } from './dto/update-classification.dto';
+import { ClassificationRepository } from './repositories/classification.repository';
 
 @Injectable()
 export class ClassificationService {
-  create(createClassificationDto: CreateClassificationDto) {
-    return 'This action adds a new classification';
-  }
+  constructor(private readonly cr: ClassificationRepository) {}
 
-  findAll() {
-    return `This action returns all classification`;
-  }
+  // create(createClassificationDto: CreateClassificationDto) {
+  //   return 'This action adds a new classification';
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} classification`;
-  }
+  // findAll() {
+  //   return `This action returns all classification`;
+  // }
 
-  update(id: number, updateClassificationDto: UpdateClassificationDto) {
-    return `This action updates a #${id} classification`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} classification`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} classification`;
-  }
+  // update(id: number, updateClassificationDto: UpdateClassificationDto) {
+  //   return `This action updates a #${id} classification`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} classification`;
+  // }
 }

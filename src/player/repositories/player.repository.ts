@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PlayerRepository } from './repositories/player.repository';
+import { PrismaService } from './../../prisma/prisma.service';
 
 @Injectable()
-export class PlayerService {
-  constructor(private readonly pr: PlayerRepository) {}
-  
+export class PlayerRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
   // create(createPlayerDto: CreatePlayerDto) {
   //   this.pr.save(createPlayerDto);
   //   return createPlayerDto;
