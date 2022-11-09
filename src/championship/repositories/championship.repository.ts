@@ -1,47 +1,53 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateChampionshipDto } from '../dto/create-championship.dto';
+import { UpdateChampionshipDto } from '../dto/update-championship.dto';
 
 @Injectable()
 export class ChampionshipRepository {
-    constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-    // create(createChampionshipDto: CreateChampionshipDto) {
-    //   this.cr.save(createChampionshipDto);
-    //   return createChampionshipDto;
-    // }
-  
-    // findAll() {
-    //   return this.cr.find();
-    // }
-  
-    // async findOne(id: string) {
-    //   const champ = await this.cr.findOneBy({idChampionship: id});
-    //   if (champ) {
-    //     return champ;
-    //   } else {
-    //     throw new NotFoundException(`Championship ${id} not found`);
-    //   }
-    // }
-  
-    // async update(id: string, updateChampionshipDto: UpdateChampionshipDto) {
-    //   const champ = await this.cr.preload({
-    //     idChampionship: id,
-    //     ...updateChampionshipDto,
-    //   });
-    //   if (champ) {
-    //     this.cr.save(champ);
-    //     return champ;
-    //   } else {
-    //     throw new NotFoundException(`Championship ${id} not found`);
-    //   }
-    // }
-  
-    // async remove(id: string) {
-    //   const champ = await this.cr.findOneBy({idChampionship: id});
-    //   if (champ) {
-    //     return this.cr.delete(id);
-    //   } else {
-    //     throw new NotFoundException(`Championship ${id} not found`);
-    //   }
-    // }
+  async save(dto: CreateChampionshipDto) {
+    await this.prisma.championship.create({
+      data: dto,
+    });
+    return dto;
+  }
+
+  async findAll() {
+    return await this.prisma.championship.findMany();
+  }
+
+  async findOne(id: string) {
+    const champ = await this.prisma.championship.findUnique({
+      where: { idChampionship: id },
+    });
+    if (champ) {
+      return champ;
+    } else {
+      throw new NotFoundException(`Championship ${id} not found`);
+    }
+  }
+
+  async update(id: string, dto: UpdateChampionshipDto) {
+    const champ = await this.prisma.championship.update({
+      where: { idChampionship: id },
+      data: dto,
+    });
+    if (champ) {
+      this.save(champ);
+      return champ;
+    } else {
+      throw new NotFoundException(`Championship ${id} not found`);
+    }
+  }
+
+  async remove(id: string) {
+    const champ = await this.findOne(id);
+    if (champ) {
+      return this.prisma.championship.delete({ where: { idChampionship: id } });
+    } else {
+      throw new NotFoundException(`Championship ${id} not found`);
+    }
+  }
 }

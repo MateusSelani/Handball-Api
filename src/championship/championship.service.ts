@@ -1,47 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { CreateChampionshipDto } from './dto/create-championship.dto';
+import { UpdateChampionshipDto } from './dto/update-championship.dto';
 import { ChampionshipRepository } from './repositories/championship.repository';
 
 @Injectable()
 export class ChampionshipService {
   constructor(private readonly cr: ChampionshipRepository) {}
 
-  // create(createChampionshipDto: CreateChampionshipDto) {
-  //   this.cr.save(createChampionshipDto);
-  //   return createChampionshipDto;
-  // }
+  create(dto: CreateChampionshipDto) {
+    this.cr.save(dto);
+    return dto;
+  }
 
-  // findAll() {
-  //   return this.cr.find();
-  // }
+  findAll() {
+    return this.cr.findAll();
+  }
 
-  // async findOne(id: string) {
-  //   const champ = await this.cr.findOneBy({idChampionship: id});
-  //   if (champ) {
-  //     return champ;
-  //   } else {
-  //     throw new NotFoundException(`Championship ${id} not found`);
-  //   }
-  // }
+  findOne(id: string) {
+    return this.cr.findOne(id);
+  }
 
-  // async update(id: string, updateChampionshipDto: UpdateChampionshipDto) {
-  //   const champ = await this.cr.preload({
-  //     idChampionship: id,
-  //     ...updateChampionshipDto,
-  //   });
-  //   if (champ) {
-  //     this.cr.save(champ);
-  //     return champ;
-  //   } else {
-  //     throw new NotFoundException(`Championship ${id} not found`);
-  //   }
-  // }
+  async update(id: string, dto: UpdateChampionshipDto) {
+    return this.cr.update(id, dto);
+  }
 
-  // async remove(id: string) {
-  //   const champ = await this.cr.findOneBy({idChampionship: id});
-  //   if (champ) {
-  //     return this.cr.delete(id);
-  //   } else {
-  //     throw new NotFoundException(`Championship ${id} not found`);
-  //   }
-  // }
+  remove(id: string) {
+    return this.cr.remove(id);
+  }
 }

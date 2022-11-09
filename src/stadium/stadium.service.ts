@@ -1,47 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { CreateStadiumDto } from './dto/create-stadium.dto';
+import { UpdateStadiumDto } from './dto/update-stadium.dto';
 import { StadiumRepository } from './repositories/stadium.repository';
 
 @Injectable()
 export class StadiumService {
   constructor(private readonly sr: StadiumRepository) {}
 
-  // create(createStadiumDto: CreateStadiumDto) {
-  //   this.sr.save(createStadiumDto);
-  //   return createStadiumDto;
-  // }
+  create(dto: CreateStadiumDto) {
+    return this.sr.save(dto);
+  }
 
-  // findAll() {
-  //   return this.sr.find();
-  // }
+  findAll() {
+    return this.sr.findAll();
+  }
 
-  // async findOne(id: string) { // falta async await
-  //   const stadium = await this.sr.findOneBy({idStadium: id});
-  //   if (stadium) {
-  //       return stadium;
-  //   } else {
-  //       throw new NotFoundException(`Stadium ${id} not found`);
-  //   }
-  // }
+  findOne(id: string) {
+    return this.sr.findOne(id);
+  }
 
-  // async update(id: string, updateStadiumDto: UpdateStadiumDto) {
-  //   const stadium = await this.sr.preload({
-  //     idStadium: id,
-  //     ...updateStadiumDto,
-  //   })
-  //   if (stadium) {
-  //       this.sr.save(stadium);
-  //       return updateStadiumDto;
-  //   } else {
-  //       throw new NotFoundException(`Stadium ${id} not found`);
-  //   }
-  // }
+  update(id: string, dto: UpdateStadiumDto) {
+    return this.sr.update(id, dto);
+  }
 
-  // async remove(id: string) {
-  //   const stadium = await this.sr.findOneBy({idStadium: id});
-  //   if (stadium) {
-  //       return this.sr.delete(stadium.idStadium);
-  //   } else {
-  //       throw new NotFoundException(`Stadium ${id} not found`);
-  //   }
-  // }
+  remove(id: string) {
+    return this.sr.remove(id);
+  }
 }

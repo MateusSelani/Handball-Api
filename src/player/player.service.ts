@@ -1,47 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { CreatePlayerDto } from './dto/create-player.dto';
+import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PlayerRepository } from './repositories/player.repository';
 
 @Injectable()
 export class PlayerService {
   constructor(private readonly pr: PlayerRepository) {}
-  
-  // create(createPlayerDto: CreatePlayerDto) {
-  //   this.pr.save(createPlayerDto);
-  //   return createPlayerDto;
-  // }
 
-  // findAll() {
-  //   return this.pr.find();
-  // }
+  create(dto: CreatePlayerDto) {
+    return this.pr.save(dto);
+  }
 
-  // async findOne(id: string) {
-  //   const player = await this.pr.findOneBy({idPlayer: id});
-  //   if (player) {
-  //       return player;
-  //   } else {
-  //       return new NotFoundException(`Player ${id} not found`);
-  //   }
-  // }
+  findAll() {
+    return this.pr.findAll();
+  }
 
-  // async update(id: string, updatePlayerDto: UpdatePlayerDto) {
-  //   const player = await this.pr.preload({
-  //     idPlayer: id,
-  //     ...updatePlayerDto,
-  //   });
-  //   if (player) {
-  //       this.pr.save(player);
-  //       return updatePlayerDto;
-  //   } else {
-  //       throw new NotFoundException(`Player ${id} not found`);
-  //   }
-  // }
+  findOne(id: string) {
+    return this.pr.findOne(id);
+  }
 
-  // async remove(id: string) {
-  //   const player = await this.pr.findOneBy({idPlayer: id});
-  //   if (player) {
-  //       return this.pr.delete(player.idPlayer);
-  //   } else {
-  //       return new NotFoundException(`Player ${id} not found`);
-  //   }
-  // }
+  update(id: string, dto: UpdatePlayerDto) {
+    return this.pr.update(id, dto);
+  }
+
+  async remove(id: string) {
+    return this.pr.remove(id);
+  }
 }

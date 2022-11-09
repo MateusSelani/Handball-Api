@@ -1,28 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { CreateAdressDto } from './dto/create-adress.dto';
+import { UpdateAdressDto } from './dto/update-adress.dto';
 import { AdressRepository } from './repositories/adress.repository';
 
 @Injectable()
 export class AdressService {
-  constructor(private readonly pr: AdressRepository) {}
+  constructor(private readonly ar: AdressRepository) {}
 
-  // create(createAdressDto: CreateAdressDto) {
-  //   this.ar.save(createAdressDto);
-  //   return createAdressDto;
-  // }
+  create(dto: CreateAdressDto) {
+    this.ar.create(dto);
+    return dto;
+  }
+
+  update(id: string, dto: UpdateAdressDto) {
+    this.ar.update(id, dto);
+  }
 
   // findAll() {
   //   return this.ar.find();
   // }
 
-  // findOne(id: number) {
+  // findOne(id: string) {
   //   return `This action returns a #${id} adress`;
-  // }
-
-  // update(id: string, updateAdressDto: UpdateAdressDto) {
-  //   const adress = this.ar.preload({
-  //     idAdress: id,
-  //     ...updateAdressDto,
-  //   });
   // }
 
   // remove(id: number) {

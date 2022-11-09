@@ -1,47 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateTeamDto } from '../dto/create-team.dto';
+import { UpdateTeamDto } from '../dto/update-team.dto';
 import { PrismaService } from './../../prisma/prisma.service';
 
 @Injectable()
 export class TeamRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  // create(createTeamDto: CreateTeamDto) {
-  //   this.tr.save(createTeamDto);
-  //   return createTeamDto;
-  // }
+  save(dto: CreateTeamDto) {
+    this.prisma.team.create({ data: dto });
+    return dto;
+  }
 
-  // findAll() {
-  //   return this.tr.find();
-  // }
+  findAll() {
+    return this.prisma.team.findMany();
+  }
 
-  // async findOne(id: string) {
-  //   const team = await this.tr.findOneBy({idTeam : id});
-  //   if (team) {
-  //       return team;
-  //   } else {
-  //       throw new NotFoundException(`Team ${id} not found`)
-  //   }
-  // }
+  async findOne(id: string) {
+    const team = await this.prisma.team.findUnique({ where: { idTeam: id } });
+    if (team) {
+      return team;
+    } else {
+      throw new NotFoundException(`Team ${id} not found`);
+    }
+  }
 
-  // async update(id: string, updateTeamDto: UpdateTeamDto) {
-  //   const team = await this.tr.preload({
-  //     idTeam: id,
-  //     ...updateTeamDto,
-  //   });
-  //   if (team) {
-  //       this.tr.save(team);
-  //       return updateTeamDto;
-  //   } else {
-  //       throw new NotFoundException(`Team ${id} not found`);
-  //   }
-  // }
+  async update(id: string, dto: UpdateTeamDto) {
+    const team = await this.prisma.team.update({
+      where: { idTeam: id },
+      data: dto,
+    });
+    if (team) {
+      this.save(team);
+      return dto;
+    } else {
+      throw new NotFoundException(`Team ${id} not found`);
+    }
+  }
 
-  // async remove(id: string) {
-  //   const team = await this.tr.findOneBy({idTeam : id});
-  //   if (team) {
-  //       return this.tr.delete(team.idTeam);
-  //   } else {
-  //       throw new NotFoundException(`Team ${id} not found`);
-  //   }
-  // }
+  async remove(id: string) {
+    const team = await this.findOne(id);
+    if (team) {
+      return this.prisma.team.delete({ where: { idTeam: id } });
+    } else {
+      throw new NotFoundException(`Team ${id} not found`);
+    }
+  }
 }

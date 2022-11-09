@@ -1,47 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreatePlayerDto } from '../dto/create-player.dto';
+import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { PrismaService } from './../../prisma/prisma.service';
 
 @Injectable()
 export class PlayerRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  // create(createPlayerDto: CreatePlayerDto) {
-  //   this.pr.save(createPlayerDto);
-  //   return createPlayerDto;
-  // }
+  save(dto: CreatePlayerDto) {
+    this.prisma.player.create({ data: dto });
+    return dto;
+  }
 
-  // findAll() {
-  //   return this.pr.find();
-  // }
+  findAll() {
+    return this.prisma.player.findMany();
+  }
 
-  // async findOne(id: string) {
-  //   const player = await this.pr.findOneBy({idPlayer: id});
-  //   if (player) {
-  //       return player;
-  //   } else {
-  //       return new NotFoundException(`Player ${id} not found`);
-  //   }
-  // }
+  async findOne(id: string) {
+    const player = await this.prisma.player.findUnique({
+      where: { idPlayer: id },
+    });
+    if (player) {
+      return player;
+    } else {
+      return new NotFoundException(`Player ${id} not found`);
+    }
+  }
 
-  // async update(id: string, updatePlayerDto: UpdatePlayerDto) {
-  //   const player = await this.pr.preload({
-  //     idPlayer: id,
-  //     ...updatePlayerDto,
-  //   });
-  //   if (player) {
-  //       this.pr.save(player);
-  //       return updatePlayerDto;
-  //   } else {
-  //       throw new NotFoundException(`Player ${id} not found`);
-  //   }
-  // }
+  async update(id: string, dto: UpdatePlayerDto) {
+    const player = await this.prisma.player.update({
+      where: { idPlayer: id },
+      data: dto,
+    });
+    if (player) {
+      this.save(player);
+      return dto;
+    } else {
+      throw new NotFoundException(`Player ${id} not found`);
+    }
+  }
 
-  // async remove(id: string) {
-  //   const player = await this.pr.findOneBy({idPlayer: id});
-  //   if (player) {
-  //       return this.pr.delete(player.idPlayer);
-  //   } else {
-  //       return new NotFoundException(`Player ${id} not found`);
-  //   }
-  // }
+  async remove(id: string) {
+    const player = await this.findOne(id);
+    if (player) {
+      return await this.prisma.player.delete({ where: { idPlayer: id } });
+    } else {
+      return new NotFoundException(`Player ${id} not found`);
+    }
+  }
 }

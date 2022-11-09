@@ -1,47 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { CreateTeamDto } from './dto/create-team.dto';
+import { UpdateTeamDto } from './dto/update-team.dto';
 import { TeamRepository } from './repositories/team.repository';
 
 @Injectable()
 export class TeamService {
   constructor(private tr: TeamRepository) {}
 
-  // create(createTeamDto: CreateTeamDto) {
-  //   this.tr.save(createTeamDto);
-  //   return createTeamDto;
-  // }
+  create(dto: CreateTeamDto) {
+    return this.tr.save(dto);
+  }
 
-  // findAll() {
-  //   return this.tr.find();
-  // }
+  findAll() {
+    return this.tr.findAll();
+  }
 
-  // async findOne(id: string) {
-  //   const team = await this.tr.findOneBy({idTeam : id});
-  //   if (team) {
-  //       return team;
-  //   } else {
-  //       throw new NotFoundException(`Team ${id} not found`)
-  //   }
-  // }
+  async findOne(id: string) {
+    return this.tr.findOne(id);
+  }
 
-  // async update(id: string, updateTeamDto: UpdateTeamDto) {
-  //   const team = await this.tr.preload({
-  //     idTeam: id,
-  //     ...updateTeamDto,
-  //   });
-  //   if (team) {
-  //       this.tr.save(team);
-  //       return updateTeamDto;
-  //   } else {
-  //       throw new NotFoundException(`Team ${id} not found`);
-  //   }
-  // }
+  async update(id: string, dto: UpdateTeamDto) {
+    return this.tr.update(id, dto);
+  }
 
-  // async remove(id: string) {
-  //   const team = await this.tr.findOneBy({idTeam : id});
-  //   if (team) {
-  //       return this.tr.delete(team.idTeam);
-  //   } else {
-  //       throw new NotFoundException(`Team ${id} not found`);
-  //   }
-  // }
+  async remove(id: string) {
+    return this.tr.remove(id);
+  }
 }
