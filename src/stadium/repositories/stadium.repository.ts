@@ -7,8 +7,8 @@ import { PrismaService } from './../../prisma/prisma.service';
 export class StadiumRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  save(dto: CreateStadiumDto) {
-    this.prisma.stadium.create({ data: dto });
+  async save(dto: CreateStadiumDto) {
+    await this.prisma.stadium.create({ data: dto });
     return dto;
   }
 

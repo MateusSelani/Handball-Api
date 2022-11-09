@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { MatchRepository } from './repositories/match.repository';
 
 @Injectable()
 export class MatchService {
-  constructor(private readonly mr: MatchRepository) {}
+  // constructor(private readonly mr: MatchRepository) {}
 
   // create(createMatchDto: CreateMatchDto) {
   //   return 'ok';

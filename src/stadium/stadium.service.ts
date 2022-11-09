@@ -7,8 +7,8 @@ import { StadiumRepository } from './repositories/stadium.repository';
 export class StadiumService {
   constructor(private readonly sr: StadiumRepository) {}
 
-  create(dto: CreateStadiumDto) {
-    return this.sr.save(dto);
+  async create(dto: CreateStadiumDto) {
+    return await this.sr.save(dto);
   }
 
   findAll() {
