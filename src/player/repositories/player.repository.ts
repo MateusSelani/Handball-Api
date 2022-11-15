@@ -33,7 +33,7 @@ export class PlayerRepository {
       data: dto,
     });
     if (player) {
-      this.save(player);
+      // this.save(player);
       return dto;
     } else {
       throw new NotFoundException(`Player ${id} not found`);

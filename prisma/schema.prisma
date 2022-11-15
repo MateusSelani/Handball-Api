@@ -11,8 +11,9 @@ datasource db {
 }
 
 model Adress {
-  idAdress String @id @default(uuid())
-  rua      String
+  idAdress         String  @id @default(uuid())
+  rua              String
+  stadium          Stadium?
 
   @@map("adress")
 }
@@ -63,10 +64,10 @@ model Match {
 }
 
 model Player {
-  idPlayer       String  @id @default(uuid())
-  namePlayer     String
-  genderPlayer   String
-  isActivePlayer Boolean @default(true)
+  idPlayer     String @id @default(uuid())
+  namePlayer   String
+  genderPlayer String
+  // isActivePlayer Boolean @default(true)
   // @ManyToOne(() => Team, (team) => team.players, {
   //     cascade: true,
   // })
@@ -77,13 +78,10 @@ model Player {
 }
 
 model Stadium {
-  idStadium   String @id @default(uuid())
+  idStadium   String  @id @default(uuid())
   nameStadium String
-  // @OneToOne(() => Adress,{
-  //     cascade: true
-  // })
-  // @JoinColumn()
-  // adress: Adress;
+  adress      Adress? @relation(fields: [idAdress], references: [idAdress])
+  idAdress    String? @unique()
 
   @@map("stadium")
 }

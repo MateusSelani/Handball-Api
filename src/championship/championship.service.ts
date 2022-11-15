@@ -8,9 +8,8 @@ export class ChampionshipService {
   constructor(private readonly cr: ChampionshipRepository) {}
 
   create(dto: CreateChampionshipDto) {
-    this.cr.save(dto);
-    return dto;
-  }
+     return this.cr.save(dto);
+    }
 
   findAll() {
     return this.cr.findAll();

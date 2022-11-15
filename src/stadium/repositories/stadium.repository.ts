@@ -28,12 +28,13 @@ export class StadiumRepository {
   }
 
   async update(id: string, dto: UpdateStadiumDto) {
+
     const stadium = await this.prisma.stadium.update({
       where: { idStadium: id },
-      data: dto,
+      data: dto
     });
+
     if (stadium) {
-      this.save(stadium);
       return dto;
     } else {
       throw new NotFoundException(`Stadium ${id} not found`);
