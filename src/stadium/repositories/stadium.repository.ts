@@ -8,12 +8,25 @@ export class StadiumRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async save(dto: CreateStadiumDto) {
-    await this.prisma.stadium.create({ data: dto });
+    await this.prisma.stadium.create({
+      data: {
+        nameStadium: dto.nameStadium,
+        adress: { create: { street: dto.adress.street } },
+      },
+    });
     return dto;
   }
 
   findAll() {
     return this.prisma.stadium.findMany();
+  }
+
+  findAllWithAdress() {
+    return this.prisma.stadium.findMany({
+      include: {
+        adress: { select: { idAdress: false, street: true, stadium: false } },
+      },
+    });
   }
 
   async findOne(id: string) {
@@ -28,10 +41,12 @@ export class StadiumRepository {
   }
 
   async update(id: string, dto: UpdateStadiumDto) {
-
     const stadium = await this.prisma.stadium.update({
       where: { idStadium: id },
-      data: dto
+      data: {
+        nameStadium: dto.nameStadium,
+        adress: { update: { street: dto.adress.street } },
+      },
     });
 
     if (stadium) {
@@ -43,8 +58,14 @@ export class StadiumRepository {
 
   async remove(id: string) {
     const stadium = await this.findOne(id);
+    
     if (stadium) {
-      return this.prisma.stadium.delete({ where: { idStadium: id } });
+      await this.prisma.adress.delete({
+        where: { idAdress: stadium.idAdress },
+      });
+      return this.prisma.stadium.delete({
+        where: { idStadium: id },
+      });
     } else {
       throw new NotFoundException(`Stadium ${id} not found`);
     }

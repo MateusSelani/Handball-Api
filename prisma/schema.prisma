@@ -12,7 +12,7 @@ datasource db {
 
 model Adress {
   idAdress         String  @id @default(uuid())
-  rua              String
+  street              String @map("street")
   stadium          Stadium?
 
   @@map("adress")

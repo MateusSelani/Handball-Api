@@ -2,5 +2,5 @@ import { Adress } from '@prisma/client';
 
 export class AdressEntity implements Adress {
     idAdress: string;
-    rua: string;
+    street: string;
 }

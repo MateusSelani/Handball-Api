@@ -4,5 +4,5 @@ export class CreateAdressDto {
     
     @IsString()
     @IsNotEmpty()
-    rua: string;
+    street: string;
 }

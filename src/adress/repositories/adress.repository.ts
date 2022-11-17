@@ -21,20 +21,4 @@ export class AdressRepository {
       data: dto,
     });
   }
-
-  // async findAll() {
-  //   return await this.prisma.adress.findMany();
-  // }
-
-  // async findOne(id: string) {
-  //   return await this.prisma.adress.findUnique({
-  //     where: {
-  //       idAdress: id
-  //     }
-  //   })
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} adress`;
-  // }
 }

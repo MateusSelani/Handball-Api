@@ -16,19 +16,4 @@ export class AdressController {
   update(@Param('id') id: string, @Body() updateAdressDto: UpdateAdressDto) {
     return this.adressService.update(id, updateAdressDto);
   }
-
-  // @Get()
-  // findAll() {
-  //   return this.adressService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.adressService.findOne(+id);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.adressService.remove(+id);
-  // }
 }

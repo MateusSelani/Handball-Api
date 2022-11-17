@@ -1,3 +1,4 @@
+import { Adress } from "@prisma/client";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateStadiumDto {
@@ -6,6 +7,6 @@ export class CreateStadiumDto {
     @IsNotEmpty()
     nameStadium: string;
 
-    // @IsNotEmpty()
-    // adress: Adress;
+    @IsNotEmpty()
+    adress: Adress;
 }

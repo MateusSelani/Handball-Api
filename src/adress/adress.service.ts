@@ -15,16 +15,4 @@ export class AdressService {
   update(id: string, dto: UpdateAdressDto) {
     this.ar.update(id, dto);
   }
-
-  // findAll() {
-  //   return this.ar.find();
-  // }
-
-  // findOne(id: string) {
-  //   return `This action returns a #${id} adress`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} adress`;
-  // }
 }
