@@ -11,9 +11,9 @@ datasource db {
 }
 
 model Adress {
-  idAdress         String  @id @default(uuid())
-  street              String @map("street")
-  stadium          Stadium?
+  idAdress String   @id @default(uuid())
+  street   String   @map("street")
+  stadium  Stadium?
 
   @@map("adress")
 }
@@ -63,20 +63,6 @@ model Match {
   @@map("match")
 }
 
-model Player {
-  idPlayer     String @id @default(uuid())
-  namePlayer   String
-  genderPlayer String
-  // isActivePlayer Boolean @default(true)
-  // @ManyToOne(() => Team, (team) => team.players, {
-  //     cascade: true,
-  // })
-  // @JoinColumn()
-  // team: Team;
-
-  @@map("player")
-}
-
 model Stadium {
   idStadium   String  @id @default(uuid())
   nameStadium String
@@ -86,12 +72,19 @@ model Stadium {
   @@map("stadium")
 }
 
+model Player {
+  idPlayer       String         @id @default(uuid())
+  namePlayer     String
+  genderPlayer   String
+  isActivePlayer Boolean        @default(true)
+  PlayerOnTeam   PlayerOnTeam[]
+
+  @@map("player")
+}
+
 model Team {
   idTeam   String @id @default(uuid())
   nameTeam String
-  // @OneToMany(() => Player, (player) => player.team)
-  // players: Player[];
-
   // @OneToOne(() => Player)
   // @JoinColumn()
   // captain: Player;
@@ -112,5 +105,19 @@ model Team {
   // @OneToMany(() => Match, (match) => match.visitingTeam)
   // matchAsVisitingTeam: Match;
 
+  // Player         Player? @relation(fields: [playerIdPlayer], references: [idPlayer])
+  // playerIdPlayer String?
+  PlayerOnTeam PlayerOnTeam[]
+
   @@map("team")
+}
+
+model PlayerOnTeam {
+  player   Player @relation(fields: [idPlayer], references: [idPlayer])
+  idPlayer String
+  team     Team   @relation(fields: [idTeam], references: [idTeam])
+  idTeam   String
+
+  @@id([idPlayer, idTeam])
+  @@map("player-on-team")
 }

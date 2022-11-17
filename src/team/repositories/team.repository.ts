@@ -7,8 +7,8 @@ import { PrismaService } from './../../prisma/prisma.service';
 export class TeamRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  save(dto: CreateTeamDto) {
-    this.prisma.team.create({ data: dto });
+  async save(dto: CreateTeamDto) {
+    await this.prisma.team.create({ data: dto });
     return dto;
   }
 
