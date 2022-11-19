@@ -12,33 +12,8 @@ export class TeamRepository {
     return dto;
   }
 
-  // hire
-  async addPlayerOnTeam(idTeam: string, idPlayer: string) {
-    const team = await this.prisma.team.findUnique({
-      where: { idTeam },
-    });
-    const player = await this.prisma.player.findUnique({
-      where: { idPlayer },
-    });
-    
-    if (team || player) {
-      idTeam = team.idTeam;
-      idPlayer = player.idPlayer;
-      return await this.prisma.playerOnTeam.create({
-        data: {
-          idTeam,
-          idPlayer,
-        },
-      });
-    } else {
-      throw new NotFoundException(
-        `Team ${idTeam} and/or Player ${idPlayer} not found`,
-      );
-    }
-  }
-
-  findAll() {
-    return this.prisma.team.findMany();
+  async findAll() {
+    return await this.prisma.team.findMany();
   }
 
   async findOne(id: string) {
@@ -69,6 +44,31 @@ export class TeamRepository {
       return this.prisma.team.delete({ where: { idTeam: id } });
     } else {
       throw new NotFoundException(`Team ${id} not found`);
+    }
+  }
+
+  // hire
+  async addPlayerOnTeam(idTeam: string, idPlayer: string) {
+    const team = await this.prisma.team.findUnique({
+      where: { idTeam },
+    });
+    const player = await this.prisma.player.findUnique({
+      where: { idPlayer },
+    });
+
+    if (team || player) {
+      idTeam = team.idTeam;
+      idPlayer = player.idPlayer;
+      return await this.prisma.playerOnTeam.create({
+        data: {
+          idTeam,
+          idPlayer,
+        },
+      });
+    } else {
+      throw new NotFoundException(
+        `Team ${idTeam} and/or Player ${idPlayer} not found`,
+      );
     }
   }
 }

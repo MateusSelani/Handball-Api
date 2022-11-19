@@ -22,15 +22,6 @@ model Championship {
   idChampionship   String @id @default(uuid())
   nameChampionship String
   yearChampionship Int
-  // @OneToMany(() => Team, (team) => team.championship)
-  // teams: Team;
-
-  // @OneToMany(() => Match, (match) => match.championship)
-  // match: Match;
-
-  // @OneToOne(() => Classification)
-  // @JoinColumn()
-  // classification: Classification;
 
   @@map("championship")
 }
@@ -39,8 +30,6 @@ model Classification {
   idClassification String @id @default(uuid())
   pointsTeam       Int
   goalDifference   Int
-  // @OneToMany(() => Team, (team) => team.classification)
-  // teams: Team;
 
   @@map("classification")
 }
@@ -51,14 +40,6 @@ model Match {
   goalVisitingTeam Int
   dateMatch        DateTime
   occurredMatch    Boolean  @default(false)
-  // @ManyToOne(() => Championship, (championship) => championship.match)
-  // championship: Championship;
-
-  // @ManyToOne(() => Team, (team) => team.matchAsHomeTeam)
-  // homeTeam: Team;
-
-  // @ManyToOne(() => Team, (team) => team.matchAsVisitingTeam)
-  // visitingTeam: Team;
 
   @@map("match")
 }
@@ -85,28 +66,6 @@ model Player {
 model Team {
   idTeam   String @id @default(uuid())
   nameTeam String
-  // @OneToOne(() => Player)
-  // @JoinColumn()
-  // captain: Player;
-
-  // @OneToOne(() => Stadium)
-  // home: Stadium;
-
-  // @ManyToOne(() => Championship, (championship) => championship.teams)
-  // @JoinColumn()
-  // championship: Championship;
-
-  // @ManyToOne(() => Classification, (classification) => classification.teams)
-  // classification: Classification;
-
-  // @OneToMany(() => Match, (match) => match.homeTeam)
-  // matchAsHomeTeam: Match;
-
-  // @OneToMany(() => Match, (match) => match.visitingTeam)
-  // matchAsVisitingTeam: Match;
-
-  // Player         Player? @relation(fields: [playerIdPlayer], references: [idPlayer])
-  // playerIdPlayer String?
   PlayerOnTeam PlayerOnTeam[]
 
   @@map("team")
