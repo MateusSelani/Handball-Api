@@ -113,11 +113,11 @@ model Team {
 }
 
 model PlayerOnTeam {
-  player   Player @relation(fields: [idPlayer], references: [idPlayer])
-  idPlayer String
+  id       String @id @default(uuid())
   team     Team   @relation(fields: [idTeam], references: [idTeam])
   idTeam   String
+  player   Player @relation(fields: [idPlayer], references: [idPlayer])
+  idPlayer String
 
-  @@id([idPlayer, idTeam])
   @@map("player-on-team")
 }

@@ -7,8 +7,9 @@ import { TeamRepository } from './repositories/team.repository';
 export class TeamService {
   constructor(private tr: TeamRepository) {}
 
-  create(dto: CreateTeamDto) {
-    return this.tr.save(dto);
+  async create(dto: CreateTeamDto) {
+    await this.tr.save(dto);
+    return dto;
   }
 
   findAll() {
