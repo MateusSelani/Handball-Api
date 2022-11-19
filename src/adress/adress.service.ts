@@ -7,12 +7,12 @@ import { AdressRepository } from './repositories/adress.repository';
 export class AdressService {
   constructor(private readonly ar: AdressRepository) {}
 
-  create(dto: CreateAdressDto) {
-    this.ar.create(dto);
+  async create(dto: CreateAdressDto) {
+    await this.ar.create(dto);
     return dto;
   }
 
-  update(id: string, dto: UpdateAdressDto) {
-    this.ar.update(id, dto);
+  async update(id: string, dto: UpdateAdressDto) {
+    return await this.ar.update(id, dto);
   }
 }

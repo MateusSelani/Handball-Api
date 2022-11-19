@@ -19,9 +19,10 @@ model Adress {
 }
 
 model Championship {
-  idChampionship   String @id @default(uuid())
-  nameChampionship String
-  yearChampionship Int
+  idChampionship     String               @id @default(uuid())
+  nameChampionship   String
+  yearChampionship   Int
+  TeamOnChampionship TeamOnChampionship[]
 
   @@map("championship")
 }
@@ -65,11 +66,12 @@ model Player {
 }
 
 model Team {
-  idTeam       String         @id @default(uuid())
-  nameTeam     String
-  PlayerOnTeam PlayerOnTeam[]
-  home         Stadium        @relation(fields: [idHome], references: [idStadium])
-  idHome       String         @unique()
+  idTeam             String               @id @default(uuid())
+  nameTeam           String
+  PlayerOnTeam       PlayerOnTeam[]
+  home               Stadium              @relation(fields: [idHome], references: [idStadium])
+  idHome             String               @unique()
+  TeamOnChampionship TeamOnChampionship[]
 
   @@map("team")
 }
@@ -82,4 +84,14 @@ model PlayerOnTeam {
   idPlayer String
 
   @@map("player-on-team")
+}
+
+model TeamOnChampionship {
+  id             String       @id @default(uuid())
+  team           Team         @relation(fields: [idTeam], references: [idTeam])
+  idTeam         String       
+  championship   Championship @relation(fields: [idChampionship], references: [idChampionship])
+  idChampionship String       
+
+  @@map("team-on-championship")
 }
