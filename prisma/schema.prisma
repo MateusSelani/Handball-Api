@@ -23,24 +23,30 @@ model Championship {
   nameChampionship   String
   yearChampionship   Int
   TeamOnChampionship TeamOnChampionship[]
+  classification     Classification[]
 
   @@map("championship")
 }
 
 model Classification {
-  idClassification String @id @default(uuid())
+  idClassification String       @id @default(uuid())
   pointsTeam       Int
   goalDifference   Int
+  championship     Championship @relation(fields: [idChampionship], references: [idChampionship])
+  idChampionship   String
+  matchs           Match[]
 
   @@map("classification")
 }
 
 model Match {
-  idMatch          String   @id @default(uuid())
+  idMatch          String         @id @default(uuid())
   goalHomeTeam     Int
   goalVisitingTeam Int
   dateMatch        DateTime
-  occurredMatch    Boolean  @default(false)
+  occurredMatch    Boolean        @default(false)
+  classification   Classification @relation(fields: [idClassification], references: [idClassification])
+  idClassification String
 
   @@map("match")
 }
@@ -89,9 +95,9 @@ model PlayerOnTeam {
 model TeamOnChampionship {
   id             String       @id @default(uuid())
   team           Team         @relation(fields: [idTeam], references: [idTeam])
-  idTeam         String       
+  idTeam         String
   championship   Championship @relation(fields: [idChampionship], references: [idChampionship])
-  idChampionship String       
+  idChampionship String
 
   @@map("team-on-championship")
 }

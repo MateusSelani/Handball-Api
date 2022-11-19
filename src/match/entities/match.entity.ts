@@ -6,4 +6,5 @@ export class MatchEntity implements Match {
     goalVisitingTeam: number;
     dateMatch: Date;
     occurredMatch: boolean;
+    idClassification: string;
 }
