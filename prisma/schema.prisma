@@ -49,6 +49,7 @@ model Stadium {
   nameStadium String
   adress      Adress? @relation(fields: [idAdress], references: [idAdress])
   idAdress    String? @unique()
+  homeTeam    Team?
 
   @@map("stadium")
 }
@@ -64,9 +65,11 @@ model Player {
 }
 
 model Team {
-  idTeam   String @id @default(uuid())
-  nameTeam String
+  idTeam       String         @id @default(uuid())
+  nameTeam     String
   PlayerOnTeam PlayerOnTeam[]
+  home         Stadium        @relation(fields: [idHome], references: [idStadium])
+  idHome       String         @unique()
 
   @@map("team")
 }

@@ -6,12 +6,7 @@ export class CreateTeamDto {
     @IsNotEmpty()
     nameTeam: string;
 
-    // @IsNotEmpty()
-    // home: Stadium;
-
-    // @IsNotEmpty()
-    // championship: Championship;
-
-    // @IsNotEmpty()
-    // captain: Player;
+    @IsNotEmpty()
+    @IsString()
+    idHome: string;
 }
