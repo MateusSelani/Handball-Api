@@ -5,4 +5,5 @@ export class ClassificationEntity implements Classification {
     pointsTeam: number;
     goalDifference: number;    
     idChampionship: string;
+    idTeam: string;
 }

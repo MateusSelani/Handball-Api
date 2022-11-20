@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Championship } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChampionshipDto } from '../dto/create-championship.dto';
 import { UpdateChampionshipDto } from '../dto/update-championship.dto';
@@ -83,5 +84,21 @@ export class ChampionshipRepository {
         `Team ${idTeam} and/or ${idChampionship} not found`,
       );
     }
+  }
+
+  async createClassification(champ: Championship) {
+    const teams = await this.prisma.teamOnChampionship.findMany({
+      where: { idChampionship: champ.idChampionship },
+    });
+    teams.forEach(async (team) => {
+      await this.prisma.classification.create({
+        data: {
+          goalDifference: 0,
+          pointsTeam: 0,
+          idChampionship: champ.idChampionship,
+          idTeam: team.idTeam,
+        },
+      });
+    });
   }
 }

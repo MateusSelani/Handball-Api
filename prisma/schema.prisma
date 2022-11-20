@@ -34,7 +34,8 @@ model Classification {
   goalDifference   Int
   championship     Championship @relation(fields: [idChampionship], references: [idChampionship])
   idChampionship   String
-  matchs           Match[]
+  matchs           Match[]      @ignore
+  idTeam           String
 
   @@map("classification")
 }
