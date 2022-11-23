@@ -24,6 +24,7 @@ model Championship {
   yearChampionship   Int
   TeamOnChampionship TeamOnChampionship[]
   classification     Classification[]
+  Match              Match[]
 
   @@map("championship")
 }
@@ -34,20 +35,21 @@ model Classification {
   goalDifference   Int
   championship     Championship @relation(fields: [idChampionship], references: [idChampionship])
   idChampionship   String
-  matchs           Match[]      @ignore
   idTeam           String
 
   @@map("classification")
 }
 
 model Match {
-  idMatch          String         @id @default(uuid())
+  idMatch          String       @id @default(uuid())
+  homeTeam         String
   goalHomeTeam     Int
+  visitingTeam     String
   goalVisitingTeam Int
   dateMatch        DateTime
-  occurredMatch    Boolean        @default(false)
-  classification   Classification @relation(fields: [idClassification], references: [idClassification])
-  idClassification String
+  occurredMatch    Boolean      @default(false)
+  championship     Championship @relation(fields: [idChampionship], references: [idChampionship])
+  idChampionship   String
 
   @@map("match")
 }

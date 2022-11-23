@@ -86,6 +86,7 @@ export class ChampionshipRepository {
     }
   }
 
+  // create classification witch teams
   async createClassification(champ: Championship) {
     const teams = await this.prisma.teamOnChampionship.findMany({
       where: { idChampionship: champ.idChampionship },
@@ -98,6 +99,36 @@ export class ChampionshipRepository {
           idChampionship: champ.idChampionship,
           idTeam: team.idTeam,
         },
+      });
+    });
+  }
+
+  // create Matchs of Championship
+  async createMatchsOfChampionship(idChampionship: string) {
+    const teams = await this.prisma.teamOnChampionship.findMany({
+      where: { idChampionship },
+    });
+    var homeTeam;
+    var visitingTeam;
+    teams.forEach((team) => {
+      var { idTeam } = team;
+      homeTeam = idTeam;
+      teams.forEach(async (visiting) => {
+        if (team !== visiting) {
+          var { idTeam } = visiting;
+          visitingTeam = idTeam;
+          await this.prisma.match.create({
+            data: {
+              homeTeam,
+              goalHomeTeam: 0,
+              visitingTeam,
+              goalVisitingTeam: 0,
+              dateMatch: '2015-03-25T12:00:00Z',
+              occurredMatch: false,
+              idChampionship,
+            },
+          });
+        }
       });
     });
   }
