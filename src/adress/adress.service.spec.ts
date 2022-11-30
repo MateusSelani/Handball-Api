@@ -1,6 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Context, createMockContext, MockContext } from '../context';
-import { createAdress, updateAdress } from './tests/adress.dependencies';
+import { createAdress, updateAdress } from './tests/adress.service.dependencies';
 
 let mockCtx: MockContext;
 let ctx: Context;
