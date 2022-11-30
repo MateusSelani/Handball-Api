@@ -1,18 +1,36 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AdressService } from './adress.service';
+import { Context, createMockContext, MockContext } from '../context';
+import { createAdress, updateAdress } from './tests/adress.dependencies';
 
-describe('AdressService', () => {
-  let service: AdressService;
+let mockCtx: MockContext;
+let ctx: Context;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [AdressService],
-    }).compile();
+beforeEach(() => {
+  mockCtx = createMockContext();
+  ctx = mockCtx as unknown as Context;
+});
 
-    service = module.get<AdressService>(AdressService);
+test('create - should pass', async () => {
+  const adress = {
+    idAdress: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    street: 'street test',
+  };
+  mockCtx.prisma.adress.create.mockResolvedValue(adress);
+
+  await expect(createAdress(adress, ctx)).resolves.toEqual({
+    idAdress: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    street: 'street test',
   });
+});
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+test('update - should pass', async () => {
+  const adress = {
+    idAdress: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    street: 'new street',
+  };
+  mockCtx.prisma.adress.update.mockResolvedValue(adress);
+
+  await expect(updateAdress(adress, ctx)).resolves.toEqual({
+    idAdress: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    street: 'new street',
   });
 });
