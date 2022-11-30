@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Context, createMockContext, MockContext } from '../context';
 import { createAdress, updateAdress } from './tests/adress.dependencies';
 
@@ -20,6 +21,19 @@ test('create - should pass', async () => {
     idAdress: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
     street: 'street test',
   });
+});
+
+test('invalid create - should fail', async () => {
+  const udf = undefined;
+
+  try {
+    mockCtx.prisma.adress.create.mockRejectedValue(udf);
+  } catch (error) {
+    console.log(error)
+    await expect(createAdress(error, ctx)).resolves.toBeInstanceOf(
+      NotFoundException,
+    );
+  }
 });
 
 test('update - should pass', async () => {
