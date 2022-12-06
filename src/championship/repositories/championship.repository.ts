@@ -53,38 +53,38 @@ export class ChampionshipRepository {
   }
 
   // subscription in championship
-  async addTeamsOnChampionship(idTeam: string, idChampionship: string) {
-    const team = await this.prisma.team.findUnique({
-      where: { idTeam },
-    });
-    const champ = await this.prisma.championship.findUnique({
-      where: { idChampionship },
-    });
-    const existence = await this.prisma.teamOnChampionship.findFirst({
-      where: { idTeam, idChampionship },
-    });
+  // async addTeamsOnChampionship(idTeam: string, idChampionship: string) {
+  //   const team = await this.prisma.team.findUnique({
+  //     where: { idTeam },
+  //   });
+  //   const champ = await this.prisma.championship.findUnique({
+  //     where: { idChampionship },
+  //   });
+  //   const existence = await this.prisma.teamOnChampionship.findFirst({
+  //     where: { idTeam, idChampionship },
+  //   });
 
-    if (existence) {
-      throw new NotFoundException(
-        `Team already registered in the championship`,
-      );
-    }
+  //   if (existence) {
+  //     throw new NotFoundException(
+  //       `Team already registered in the championship`,
+  //     );
+  //   }
 
-    if (team || champ) {
-      idTeam = team.idTeam;
-      idChampionship = champ.idChampionship;
-      return await this.prisma.teamOnChampionship.create({
-        data: {
-          idTeam,
-          idChampionship,
-        },
-      });
-    } else {
-      throw new NotFoundException(
-        `Team ${idTeam} and/or ${idChampionship} not found`,
-      );
-    }
-  }
+  //   if (team || champ) {
+  //     idTeam = team.idTeam;
+  //     idChampionship = champ.idChampionship;
+  //     return await this.prisma.teamOnChampionship.create({
+  //       data: {
+  //         idTeam,
+  //         idChampionship,
+  //       },
+  //     });
+  //   } else {
+  //     throw new NotFoundException(
+  //       `Team ${idTeam} and/or ${idChampionship} not found`,
+  //     );
+  //   }
+  // }
 
   // create classification witch teams
   async createClassification(champ: Championship) {

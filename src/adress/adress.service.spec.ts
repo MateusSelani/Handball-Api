@@ -23,7 +23,7 @@ test('create - should pass', async () => {
   });
 });
 
-test('invalid create - should fail', async () => {
+test('invalid create - not found', async () => {
   const udf = undefined;
 
   try {

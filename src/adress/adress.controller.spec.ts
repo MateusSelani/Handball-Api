@@ -1,20 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AdressController } from './adress.controller';
-import { AdressService } from './adress.service';
+import { Context, createMockContext, MockContext } from "src/context";
 
-describe('AdressController', () => {
-  let controller: AdressController;
+let mockCtx: MockContext;
+let ctx: Context;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AdressController],
-      providers: [AdressService],
-    }).compile();
-
-    controller = module.get<AdressController>(AdressController);
-  });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+beforeEach(() => {
+  mockCtx = createMockContext();
+  ctx = mockCtx as unknown as Context;
 });

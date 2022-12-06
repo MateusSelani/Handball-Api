@@ -57,8 +57,8 @@ model Match {
 model Stadium {
   idStadium   String  @id @default(uuid())
   nameStadium String
-  adress      Adress? @relation(fields: [idAdress], references: [idAdress])
-  idAdress    String? @unique()
+  adress      Adress @relation(fields: [idAdress], references: [idAdress])
+  idAdress    String @unique()
   homeTeam    Team?
 
   @@map("stadium")

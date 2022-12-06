@@ -45,7 +45,7 @@ export class StadiumRepository {
       where: { idStadium: id },
       data: {
         nameStadium: dto.nameStadium,
-        adress: { update: { street: dto.adress.street } },
+        adress: { update: { street: dto.adress?.street } },
       },
     });
 
