@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePlayerDto {
   @IsString()
@@ -9,5 +9,6 @@ export class CreatePlayerDto {
   @IsNotEmpty()
   genderPlayer: string;
 
+  @IsBoolean()
   isActivePlayer?: boolean;
 }

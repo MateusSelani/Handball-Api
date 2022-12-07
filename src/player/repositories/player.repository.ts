@@ -28,12 +28,15 @@ export class PlayerRepository {
   }
 
   async update(id: string, dto: UpdatePlayerDto) {
-    const player = await this.prisma.player.update({
+    const exists = await this.prisma.player.findUnique({
       where: { idPlayer: id },
-      data: dto,
     });
-    if (player) {
-      // this.save(player);
+
+    if (exists) {
+      await this.prisma.player.update({
+        where: { idPlayer: id },
+        data: dto,
+      });
       return dto;
     } else {
       throw new NotFoundException(`Player ${id} not found`);
@@ -41,11 +44,13 @@ export class PlayerRepository {
   }
 
   async remove(id: string) {
-    const player = await this.findOne(id);
+    const player = await this.prisma.player.findUnique({
+      where: { idPlayer: id },
+    });
     if (player) {
       return await this.prisma.player.delete({ where: { idPlayer: id } });
     } else {
-      return new NotFoundException(`Player ${id} not found`);
+      throw new NotFoundException(`Player ${id} not found`);
     }
   }
 }
