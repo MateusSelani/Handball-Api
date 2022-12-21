@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PlayerRepository } from './repositories/player.repository';
@@ -8,22 +12,42 @@ export class PlayerService {
   constructor(private readonly pr: PlayerRepository) {}
 
   create(dto: CreatePlayerDto) {
-    return this.pr.save(dto);
+    const player = this.pr.save(dto);
+    if (player) {
+      return player;
+    } else {
+      throw new BadRequestException('Player not created!');
+    }
   }
 
   findAll() {
     return this.pr.findAll();
   }
 
-  findOne(id: string) {
-    return this.pr.findOne(id);
+  async findOne(id: string) {
+    const player = await this.pr.findOne(id);
+    if (player) {
+      return player;
+    } else {
+      return new NotFoundException(`Player ${id} not found`);
+    }
   }
 
-  update(id: string, dto: UpdatePlayerDto) {
-    return this.pr.update(id, dto);
+  async update(id: string, dto: UpdatePlayerDto) {
+    const player = await this.pr.findOne(id);
+    if (player) {
+      await this.pr.update(id, dto);
+      return player;
+    } else {
+      throw new NotFoundException(`Player ${id} not found`);
+    }
   }
 
   async remove(id: string) {
-    return this.pr.remove(id);
+    if (id) {
+      return await this.pr.remove(id);
+    } else {
+      throw new NotFoundException(`Player ${id} not found`);
+    }
   }
 }
