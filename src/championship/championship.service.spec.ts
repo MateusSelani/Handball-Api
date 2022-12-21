@@ -1,18 +1,25 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ChampionshipService } from './championship.service';
+import { Context, createMockContext, MockContext } from '../context';
+import { createChampionship } from './tests/championship.service.dependencies';
 
-describe('ChampionshipService', () => {
-  let service: ChampionshipService;
+let mockCtx: MockContext;
+let ctx: Context;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [ChampionshipService],
-    }).compile();
+beforeEach(() => {
+  mockCtx = createMockContext();
+  ctx = mockCtx as unknown as Context;
+});
 
-    service = module.get<ChampionshipService>(ChampionshipService);
-  });
+test('create - should pass', async () => {
+  const champ = {
+    idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameChampionship: 'Brasileirão test',
+    yearChampionship: 2022,
+  };
+  mockCtx.prisma.championship.create.mockResolvedValue(champ);
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  await expect(createChampionship(champ, ctx)).resolves.toEqual({
+    idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameChampionship: 'Brasileirão test',
+    yearChampionship: 2022
   });
 });
