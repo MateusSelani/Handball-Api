@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { TeamRepository } from './repositories/team.repository';
@@ -8,8 +12,12 @@ export class TeamService {
   constructor(private tr: TeamRepository) {}
 
   async create(dto: CreateTeamDto) {
-    await this.tr.save(dto);
-    return dto;
+    const team = await this.tr.save(dto);
+    if (team) {
+      return team;
+    } else {
+      throw new BadRequestException('Team not created!');
+    }
   }
 
   findAll() {
@@ -17,14 +25,30 @@ export class TeamService {
   }
 
   async findOne(id: string) {
-    return this.tr.findOne(id);
+    const team = this.tr.findOne(id);
+    if (team) {
+      return team;
+    } else {
+      throw new NotFoundException(`Team ${id} not found`);
+    }
   }
 
   async update(id: string, dto: UpdateTeamDto) {
-    return this.tr.update(id, dto);
+    const team = await this.tr.findOne(id);
+    if (team) {
+      return await this.tr.update(id, dto);
+    } else {
+      throw new NotFoundException('Team not found!');
+    }
   }
 
   async remove(id: string) {
-    return this.tr.remove(id);
+    const team = await this.findOne(id);
+    if (team) {
+      await this.tr.remove(id);
+      return `${id} deleted!`;
+    } else {
+      throw new NotFoundException(`Team ${id} not found`);
+    }
   }
 }
