@@ -45,7 +45,8 @@ export class ChampionshipService {
   async remove(id: string) {
     const champ = await this.cr.findOne(id);
     if (champ) {
-      return await this.cr.remove(id);
+      await this.cr.remove(id);
+      return `${id} deleted!`
     } else {
       throw new NotFoundException(`Championship ${id} not found`);
     }

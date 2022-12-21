@@ -52,6 +52,7 @@ export class StadiumService {
     const stadium = await this.sr.findOne(id);
     if (stadium) {
       await this.sr.remove(id);
+      return `${id} deleted!`
     } else {
       throw new NotFoundException(`Stadium ${id} not found!`);
     }

@@ -45,7 +45,8 @@ export class PlayerService {
 
   async remove(id: string) {
     if (id) {
-      return await this.pr.remove(id);
+      await this.pr.remove(id);
+      return `${id} deleted!`
     } else {
       throw new NotFoundException(`Player ${id} not found`);
     }
