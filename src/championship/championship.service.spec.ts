@@ -1,7 +1,9 @@
 import { Context, createMockContext, MockContext } from '../context';
 import {
   createChampionship,
-  findAllChampionship
+  deleteChampionship,
+  findAllChampionship,
+  findOneChampionship
 } from './tests/championship.service.dependencies';
 
 let mockCtx: MockContext;
@@ -35,6 +37,14 @@ test('findall - should pass', async () => {
   );
 });
 
+test('findone - should pass', async () => {
+  const id = 'f5aec233-22da-474b-b17d-c05f5ff0a08b';
+
+  await expect(findOneChampionship(id, ctx)).resolves.toEqual(
+    Error('Championship not found!'),
+  );
+});
+
 test('update - should pass', async () => {
   const champ = {
     idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
@@ -48,4 +58,10 @@ test('update - should pass', async () => {
     nameChampionship: 'Europe league',
     yearChampionship: 2023,
   });
+});
+
+test('deleted - should pass', async () => {
+  const idChampionship = 'f5aec233-22da-474b-b17d-c05f5ff0a08b';
+
+  await expect(deleteChampionship(idChampionship, ctx)).resolves.toEqual('Ok!');
 });

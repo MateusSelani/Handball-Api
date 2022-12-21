@@ -28,6 +28,20 @@ export async function findAllChampionship(ctx: Context) {
   }
 }
 
+export async function findOneChampionship(
+  idChampionship: string,
+  ctx: Context,
+) {
+  const champ = await ctx.prisma.championship.findUnique({
+    where: { idChampionship },
+  });
+  if (champ) {
+    return champ;
+  } else {
+    return new Error('Championship not found!');
+  }
+}
+
 interface UpdateChampionship {
   idChampionship: string;
   nameChampionship: string;
@@ -45,5 +59,16 @@ export async function updateChampionship(
     });
   } else {
     return new Error('Adress must accept terms!');
+  }
+}
+
+export async function deleteChampionship(idChampionship: string, ctx: Context) {
+  if (idChampionship) {
+    await ctx.prisma.championship.delete({
+      where: { idChampionship},
+    });
+    return 'Ok!';
+  } else {
+    return new Error('Championship not found!');
   }
 }
