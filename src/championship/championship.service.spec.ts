@@ -1,5 +1,8 @@
 import { Context, createMockContext, MockContext } from '../context';
-import { createChampionship } from './tests/championship.service.dependencies';
+import {
+  createChampionship,
+  findAllChampionship
+} from './tests/championship.service.dependencies';
 
 let mockCtx: MockContext;
 let ctx: Context;
@@ -20,6 +23,29 @@ test('create - should pass', async () => {
   await expect(createChampionship(champ, ctx)).resolves.toEqual({
     idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
     nameChampionship: 'Brasileirão test',
-    yearChampionship: 2022
+    yearChampionship: 2022,
+  });
+});
+
+test('findall - should pass', async () => {
+  mockCtx.prisma.championship.findMany.getMockImplementation();
+
+  await expect(findAllChampionship(ctx)).resolves.toEqual(
+    Error('Championship not found!'),
+  );
+});
+
+test('update - should pass', async () => {
+  const champ = {
+    idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameChampionship: 'Europe league',
+    yearChampionship: 2023,
+  };
+  mockCtx.prisma.championship.create.mockResolvedValue(champ);
+
+  await expect(createChampionship(champ, ctx)).resolves.toEqual({
+    idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameChampionship: 'Europe league',
+    yearChampionship: 2023,
   });
 });
