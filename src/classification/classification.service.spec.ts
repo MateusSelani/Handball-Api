@@ -1,6 +1,6 @@
 import { Context, createMockContext, MockContext } from '../context';
 import {
-  CreateClassification, deleteClassification, findAllClassification, findOneClassification, updateClassification
+  createClassification, deleteClassification, findAllClassification, findOneClassification, updateClassification
 } from './tests/classification.service.dependencies';
 
 let mockCtx: MockContext;
@@ -21,7 +21,7 @@ test('create - should pass', async () => {
   };
   mockCtx.prisma.classification.create.mockResolvedValue(classif);
 
-  await expect(CreateClassification(classif, ctx)).resolves.toEqual({
+  await expect(createClassification(classif, ctx)).resolves.toEqual({
     idClassification: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
     pointsTeam: 0,
     goalDifference: 0,

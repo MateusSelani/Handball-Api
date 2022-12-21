@@ -1,18 +1,66 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PlayerService } from './player.service';
+import { Context, createMockContext, MockContext } from '../context';
+import { createPlayer, deletePlayer, findAllPlayer, findOnePlayer, updatePlayer } from './tests/player.service.dependencies';
 
-describe('PlayerService', () => {
-  let service: PlayerService;
+let mockCtx: MockContext;
+let ctx: Context;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [PlayerService],
-    }).compile();
+beforeEach(() => {
+  mockCtx = createMockContext();
+  ctx = mockCtx as unknown as Context;
+});
 
-    service = module.get<PlayerService>(PlayerService);
+test('create - should pass', async () => {
+  const player = {
+    idPlayer: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    namePlayer: 'John',
+    genderPlayer: 'masc',
+    isActivePlayer: true,
+  };
+  mockCtx.prisma.player.create.mockResolvedValue(player);
+
+  await expect(createPlayer(player, ctx)).resolves.toEqual({
+    idPlayer: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    namePlayer: 'John',
+    genderPlayer: 'masc',
+    isActivePlayer: true,
   });
+});
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+test('findall - should pass', async () => {
+  mockCtx.prisma.player.findMany.getMockImplementation();
+
+  await expect(findAllPlayer(ctx)).resolves.toEqual(
+    Error('Player not found!'),
+  );
+});
+
+test('findone - should pass', async () => {
+  const id = 'f5aec233-22da-474b-b17d-c05f5ff0a08b';
+
+  await expect(findOnePlayer(id, ctx)).resolves.toEqual(
+    Error('Player not found!'),
+  );
+});
+
+test('update - should pass', async () => {
+  const player = {
+    idPlayer: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    namePlayer: 'John',
+    genderPlayer: 'masc',
+    isActivePlayer: true,
+  };
+  mockCtx.prisma.player.update.mockResolvedValue(player);
+
+  await expect(updatePlayer(player, ctx)).resolves.toEqual({
+    idPlayer: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    namePlayer: 'John',
+    genderPlayer: 'masc',
+    isActivePlayer: true,
   });
+});
+
+test('deleted - should pass', async () => {
+  const idPlayer = 'f5aec233-22da-474b-b17d-c05f5ff0a08b';
+
+  await expect(deletePlayer(idPlayer, ctx)).resolves.toEqual('Ok!');
 });

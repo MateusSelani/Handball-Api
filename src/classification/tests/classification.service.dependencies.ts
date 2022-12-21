@@ -8,7 +8,7 @@ interface CreateClassification {
   idTeam: string;
 }
 
-export async function CreateClassification(
+export async function createClassification(
   classif: CreateClassification,
   ctx: Context,
 ) {
@@ -62,7 +62,7 @@ export async function updateClassification(
       data: classif,
     });
   } else {
-    return new Error('Adress must accept terms!');
+    return new Error('Classification must accept terms!');
   }
 }
 

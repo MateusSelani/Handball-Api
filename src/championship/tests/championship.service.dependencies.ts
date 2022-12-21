@@ -58,7 +58,7 @@ export async function updateChampionship(
       data: champ,
     });
   } else {
-    return new Error('Adress must accept terms!');
+    return new Error('Championship must accept terms!');
   }
 }
 
