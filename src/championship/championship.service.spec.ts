@@ -3,7 +3,8 @@ import {
   createChampionship,
   deleteChampionship,
   findAllChampionship,
-  findOneChampionship
+  findOneChampionship,
+  updateChampionship
 } from './tests/championship.service.dependencies';
 
 let mockCtx: MockContext;
@@ -51,9 +52,9 @@ test('update - should pass', async () => {
     nameChampionship: 'Europe league',
     yearChampionship: 2023,
   };
-  mockCtx.prisma.championship.create.mockResolvedValue(champ);
+  mockCtx.prisma.championship.update.mockResolvedValue(champ);
 
-  await expect(createChampionship(champ, ctx)).resolves.toEqual({
+  await expect(updateChampionship(champ, ctx)).resolves.toEqual({
     idChampionship: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
     nameChampionship: 'Europe league',
     yearChampionship: 2023,
