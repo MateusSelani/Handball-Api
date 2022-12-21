@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Championship } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChampionshipDto } from '../dto/create-championship.dto';
@@ -9,10 +9,9 @@ export class ChampionshipRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async save(dto: CreateChampionshipDto) {
-    await this.prisma.championship.create({
+    return await this.prisma.championship.create({
       data: dto,
     });
-    return dto;
   }
 
   async findAll() {
@@ -20,36 +19,22 @@ export class ChampionshipRepository {
   }
 
   async findOne(id: string) {
-    const champ = await this.prisma.championship.findUnique({
+    return await this.prisma.championship.findUnique({
       where: { idChampionship: id },
     });
-    if (champ) {
-      return champ;
-    } else {
-      throw new NotFoundException(`Championship ${id} not found`);
-    }
   }
 
-  async update(id: string, dto: UpdateChampionshipDto) {
-    const champ = await this.prisma.championship.update({
-      where: { idChampionship: id },
+  async update(idChampionship: string, dto: UpdateChampionshipDto) {
+    return await this.prisma.championship.update({
+      where: { idChampionship },
       data: dto,
     });
-    if (champ) {
-      this.save(champ);
-      return champ;
-    } else {
-      throw new NotFoundException(`Championship ${id} not found`);
-    }
   }
 
   async remove(id: string) {
-    const champ = await this.findOne(id);
-    if (champ) {
-      return this.prisma.championship.delete({ where: { idChampionship: id } });
-    } else {
-      throw new NotFoundException(`Championship ${id} not found`);
-    }
+    return await this.prisma.championship.delete({
+      where: { idChampionship: id },
+    });
   }
 
   // subscription in championship

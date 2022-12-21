@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common';
 import { CreateChampionshipDto } from './dto/create-championship.dto';
 import { UpdateChampionshipDto } from './dto/update-championship.dto';
 import { ChampionshipRepository } from './repositories/championship.repository';
@@ -8,7 +12,12 @@ export class ChampionshipService {
   constructor(private readonly cr: ChampionshipRepository) {}
 
   async create(dto: CreateChampionshipDto) {
-    return await this.cr.save(dto);
+    const champ = await this.cr.save(dto);
+    if (champ) {
+      return champ;
+    } else {
+      throw new BadRequestException('Championship not created!');
+    }
   }
 
   findAll() {
@@ -16,14 +25,29 @@ export class ChampionshipService {
   }
 
   async findOne(id: string) {
-    return await this.cr.findOne(id);
+    const champ = await this.cr.findOne(id);
+    if (champ) {
+      return champ;
+    } else {
+      throw new NotFoundException(`Championship ${id} not found`);
+    }
   }
 
   async update(id: string, dto: UpdateChampionshipDto) {
-    return this.cr.update(id, dto);
+    const champ = await this.cr.update(id, dto);
+    if (champ) {
+      return champ
+    } else {
+      throw new NotFoundException(`Championship ${id} not found`);
+    }
   }
 
   async remove(id: string) {
-    return await this.cr.remove(id);
+    const champ = await this.cr.findOne(id);
+    if (champ) {
+      return await this.cr.remove(id);
+    } else {
+      throw new NotFoundException(`Championship ${id} not found`);
+    }
   }
 }
