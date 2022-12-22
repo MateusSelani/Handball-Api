@@ -1,6 +1,6 @@
 import { Context } from 'src/context';
 
-interface CreatePlayer {
+interface Player {
   idPlayer: string;
   namePlayer: string;
   genderPlayer: string;
@@ -8,7 +8,7 @@ interface CreatePlayer {
 }
 
 export async function createPlayer(
-  player: CreatePlayer,
+  player: Player,
   ctx: Context,
 ) {
   if (player) {
@@ -43,15 +43,8 @@ export async function findOnePlayer(
   }
 }
 
-interface UpdatePlayer {
-  idPlayer: string;
-  namePlayer: string;
-  genderPlayer: string;
-  isActivePlayer: boolean;
-}
-
 export async function updatePlayer(
-  player: UpdatePlayer,
+  player: Player,
   ctx: Context,
 ) {
   if (player) {

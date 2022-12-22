@@ -1,19 +1,18 @@
 import { Context } from 'src/context';
 
-
-interface CreateStadium {
+interface Stadium {
   idStadium: string;
   nameStadium: string;
   idAdress: string;
 }
 
-export async function createStadium(stadium: CreateStadium, ctx: Context) {
+export async function createStadium(stadium: Stadium, ctx: Context) {
   if (stadium) {
     return await ctx.prisma.stadium.create({
       data: {
         idStadium: stadium.idStadium,
         nameStadium: stadium.nameStadium,
-        idAdress: stadium.idAdress
+        idAdress: stadium.idAdress,
       },
     });
   } else {
@@ -30,10 +29,7 @@ export async function findAllStadium(ctx: Context) {
   }
 }
 
-export async function findOneStadium(
-  idStadium: string,
-  ctx: Context,
-) {
+export async function findOneStadium(idStadium: string, ctx: Context) {
   const stadium = await ctx.prisma.stadium.findUnique({
     where: { idStadium },
   });
@@ -44,23 +40,14 @@ export async function findOneStadium(
   }
 }
 
-interface UpdateStadium {
-  idStadium: string;
-  nameStadium: string;
-  idAdress: string;
-}
-
-export async function updateStadium(
-  stadium: UpdateStadium,
-  ctx: Context,
-) {
+export async function updateStadium(stadium: Stadium, ctx: Context) {
   if (stadium) {
     return await ctx.prisma.stadium.update({
       where: { idStadium: stadium.idStadium },
       data: {
         idStadium: stadium.idStadium,
         nameStadium: stadium.nameStadium,
-        idAdress: stadium.idAdress
+        idAdress: stadium.idAdress,
       },
     });
   } else {

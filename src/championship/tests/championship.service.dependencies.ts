@@ -1,13 +1,13 @@
 import { Context } from 'src/context';
 
-interface CreateChampionship {
+interface Championship {
   idChampionship: string;
   nameChampionship: string;
   yearChampionship: number;
 }
 
 export async function createChampionship(
-  champ: CreateChampionship,
+  champ: Championship,
   ctx: Context,
 ) {
   if (champ) {
@@ -42,14 +42,8 @@ export async function findOneChampionship(
   }
 }
 
-interface UpdateChampionship {
-  idChampionship: string;
-  nameChampionship: string;
-  yearChampionship: number;
-}
-
 export async function updateChampionship(
-  champ: UpdateChampionship,
+  champ: Championship,
   ctx: Context,
 ) {
   if (champ) {

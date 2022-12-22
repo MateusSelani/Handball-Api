@@ -1,6 +1,6 @@
 import { Context } from 'src/context';
 
-interface CreateClassification {
+interface Classification {
   idClassification: string;
   pointsTeam: number;
   goalDifference: number;
@@ -9,7 +9,7 @@ interface CreateClassification {
 }
 
 export async function createClassification(
-  classif: CreateClassification,
+  classif: Classification,
   ctx: Context,
 ) {
   if (classif) {
@@ -44,16 +44,8 @@ export async function findOneClassification(
   }
 }
 
-interface UpdateClassification {
-  idClassification: string;
-  pointsTeam: number;
-  goalDifference: number;
-  idChampionship: string;
-  idTeam: string;
-}
-
 export async function updateClassification(
-  classif: UpdateClassification,
+  classif: Classification,
   ctx: Context,
 ) {
   if (classif) {
@@ -66,7 +58,10 @@ export async function updateClassification(
   }
 }
 
-export async function deleteClassification(idClassification: string, ctx: Context) {
+export async function deleteClassification(
+  idClassification: string,
+  ctx: Context,
+) {
   if (idClassification) {
     await ctx.prisma.classification.delete({
       where: { idClassification },

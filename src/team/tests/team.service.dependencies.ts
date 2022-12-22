@@ -1,12 +1,12 @@
 import { Context } from 'src/context';
 
-interface CreateTeam {
+interface Team {
   idTeam: string;
   nameTeam: string;
   idHome: string;
 }
 
-export async function createTeam(team: CreateTeam, ctx: Context) {
+export async function createTeam(team: Team, ctx: Context) {
   if (team) {
     return await ctx.prisma.team.create({
       data: {
@@ -40,13 +40,7 @@ export async function findOneTeam(idTeam: string, ctx: Context) {
   }
 }
 
-interface UpdateTeam {
-  idTeam: string;
-  nameTeam: string;
-  idHome: string;
-}
-
-export async function updateTeam(team: UpdateTeam, ctx: Context) {
+export async function updateTeam(team: Team, ctx: Context) {
   if (team) {
     return await ctx.prisma.team.update({
       where: { idTeam: team.idTeam },

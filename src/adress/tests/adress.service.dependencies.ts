@@ -1,11 +1,11 @@
 import { Context } from 'src/context';
 
-interface CreateAdress {
+interface Adress {
   idAdress: string;
   street: string;
 }
 
-export async function createAdress(adress: CreateAdress, ctx: Context) {
+export async function createAdress(adress: Adress, ctx: Context) {
   if (adress) {
     return await ctx.prisma.adress.create({
       data: adress,
@@ -15,12 +15,7 @@ export async function createAdress(adress: CreateAdress, ctx: Context) {
   }
 }
 
-interface UpdateAdress {
-  idAdress: string;
-  street: string;
-}
-
-export async function updateAdress(adress: UpdateAdress, ctx: Context) {
+export async function updateAdress(adress: Adress, ctx: Context) {
   if (adress) {
     return await ctx.prisma.adress.update({
       where: { idAdress: adress.idAdress },
