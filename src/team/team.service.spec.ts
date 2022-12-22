@@ -1,18 +1,64 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { TeamService } from './team.service';
+import { Context, createMockContext, MockContext } from '../context';
+import {
+    createTeam,
+    deleteTeam,
+    findAllTeam,
+    findOneTeam,
+    updateTeam
+} from './tests/team.service.dependencies';
 
-describe('TeamService', () => {
-  let service: TeamService;
+let mockCtx: MockContext;
+let ctx: Context;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [TeamService],
-    }).compile();
+beforeEach(() => {
+  mockCtx = createMockContext();
+  ctx = mockCtx as unknown as Context;
+});
 
-    service = module.get<TeamService>(TeamService);
+test('create - should pass', async () => {
+  const team = {
+    idTeam: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameTeam: 'Vila Nova',
+    idHome: 'cca7e0fc-3ba4-4378-bcd7-99720a9e25ce',
+  };
+  mockCtx.prisma.team.create.mockResolvedValue(team);
+
+  await expect(createTeam(team, ctx)).resolves.toEqual({
+    idTeam: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameTeam: 'Vila Nova',
+    idHome: 'cca7e0fc-3ba4-4378-bcd7-99720a9e25ce',
   });
+});
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+test('findall - should pass', async () => {
+  mockCtx.prisma.team.findMany.getMockImplementation();
+
+  await expect(findAllTeam(ctx)).resolves.toEqual(Error('Team not found!'));
+});
+
+test('findone - should pass', async () => {
+  const id = 'f5aec233-22da-474b-b17d-c05f5ff0a08b';
+
+  await expect(findOneTeam(id, ctx)).resolves.toEqual(Error('Team not found!'));
+});
+
+test('update - should pass', async () => {
+  const team = {
+    idTeam: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameTeam: 'Vila Nova',
+    idHome: 'cca7e0fc-3ba4-4378-bcd7-99720a9e25ce',
+  };
+  mockCtx.prisma.team.update.mockResolvedValue(team);
+
+  await expect(updateTeam(team, ctx)).resolves.toEqual({
+    idTeam: 'f5aec233-22da-474b-b17d-c05f5ff0a08b',
+    nameTeam: 'Vila Nova',
+    idHome: 'cca7e0fc-3ba4-4378-bcd7-99720a9e25ce',
   });
+});
+
+test('deleted - should pass', async () => {
+  const idTeam = 'f5aec233-22da-474b-b17d-c05f5ff0a08b';
+
+  await expect(deleteTeam(idTeam, ctx)).resolves.toEqual('Ok!');
 });
