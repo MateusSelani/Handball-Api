@@ -60,7 +60,7 @@ export async function updatePlayer(
       data: player,
     });
   } else {
-    return new Error('player must accept terms!');
+    return new Error('Player must accept terms!');
   }
 }
 
